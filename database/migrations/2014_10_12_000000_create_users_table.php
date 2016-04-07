@@ -84,6 +84,10 @@ class CreateUsersTable extends Migration
             $table->integer('keterangan');
             $table->timestamps();
         });
+
+        Schema::create('grader', function (Blueprint $table) {
+            $table->integer('status');
+        });
     }
 
     /**
@@ -98,5 +102,6 @@ class CreateUsersTable extends Migration
         Schema::drop('pelanggan_baru');
         Schema::drop('retribusi');
         Schema::drop('tunggakan');
+        Schema::drop('grader');
     }
 }

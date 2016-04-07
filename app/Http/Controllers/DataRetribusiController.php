@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Request;
 use Input;
 use File;
+use App\Grader;
+use App\Retribusi;
 class DataRetribusiController extends Controller
 {
     public function index(){
@@ -94,8 +96,23 @@ class DataRetribusiController extends Controller
     }
 
     public function banding(){
+    	$grader = Grader::first();
+    	$sumof0 = Retribusi::where('status_cek','=',0)->count();
+    	return view('dkp.bandingkan',compact('grader','sumof0'));
+    }
 
-    	return view('dkp.home');
+    public function start(){
+    	Grader::where('status',0)->update(array(
+			'status' => '1'
+		));
+    	return redirect("http://localhost:3000/start");
+    }
+
+    public function stop(){
+    	Grader::where('status',1)->update(array(
+			'status' => '0'
+		));
+    	return redirect("http://localhost:3000/stop");
     }
 
 }

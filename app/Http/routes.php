@@ -18,3 +18,7 @@ Route::post('retribusi/potensi','DataRetribusiController@insertPotensi');
 
 Route::get('retribusi/data','DataRetribusiController@retribusi');
 Route::get('retribusi/banding','DataRetribusiController@banding');
+
+/*grader*/
+Route::get('grader/start','DataRetribusiController@start');
+Route::get('grader/stop','DataRetribusiController@stop');
