@@ -11,4 +11,10 @@
 |
 */
 
+/*admin*/ 
 Route::get('/','HomeController@index');
+Route::get('retribusi/potensi','DataRetribusiController@potensi');
+Route::post('retribusi/potensi','DataRetribusiController@insertPotensi');
+
+Route::get('retribusi/data','DataRetribusiController@retribusi');
+Route::get('retribusi/banding','DataRetribusiController@banding');

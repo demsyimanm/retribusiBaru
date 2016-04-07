@@ -2,7 +2,7 @@
 @section ('content')
 
 
-<div class="ui raised very padded text container segment" style="margin-top:100px;">
+<div class="ui raised very padded text container segment" style="margin-top:75px;">
 	<center>
 		<h2 class="ui header">Sistem Informasi Retribusi Kebersihan</h2>
 		<div>

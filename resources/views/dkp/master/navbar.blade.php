@@ -33,10 +33,16 @@
 <div class="ui fixed inverted menu">
  <div class="ui container">
     <div class="header item"><img class ="logo" src="{{URL::to('assets/image/logosurabaya.png')}}" style="width:50px; padding-right:15px;"> DKP Surabaya</div>
-    <a class="item">Home</a>
-    <a class="item">Input Data Reteribusi</a>
+    <a class="item" href="{{url('')}}">Home</a>
+    <div class="ui dropdown item">Data Retribusi <i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item" href="{{url('retribusi/potensi')}}">Input Data Potensi</a>
+        <a class="item" href="{{url('retribusi/data')}}">Input Data Retribusi</a>
+        <a class="item"href="{{url('retribusi/banding')}}">Bandingkan Data</a>
+      </div>
+    </div>
     <a class="item">Rekomendasi Survey</a>
-    <a class="item">Input Pelanggan Baru</a>
+    <a class="item">Pelanggan Baru</a>
     <div class="right menu">
       <a class="item">Logout</a>
     </div>
