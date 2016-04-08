@@ -17,7 +17,10 @@ Route::get('retribusi/potensi','DataRetribusiController@potensi');
 Route::post('retribusi/potensi','DataRetribusiController@insertPotensi');
 
 Route::get('retribusi/data','DataRetribusiController@retribusi');
+Route::post('retribusi/data','DataRetribusiController@insertRetribusi');
 Route::get('retribusi/banding','DataRetribusiController@banding');
+
+Route::get('rekomendasi/','ReportBedaController@index');
 
 /*grader*/
 Route::get('grader/start','DataRetribusiController@start');

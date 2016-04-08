@@ -4,3 +4,4 @@
   	<script src="{{URL::to('assets/Semantic/components/popup.js')}}"></script>
  	<script src="{{URL::to('assets/Semantic/components/transition.js')}}"></script>
  	<script src="{{URL::to('assets/Semantic/components/dropdown.js')}}"></script>
+ 	<script src="{{URL::to('assets/sweetalert/sweetalert.min.js')}}"></script>

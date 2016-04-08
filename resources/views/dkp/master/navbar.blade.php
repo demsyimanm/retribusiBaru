@@ -38,13 +38,13 @@
       <div class="menu">
         <a class="item" href="{{url('retribusi/potensi')}}">Input Data Potensi</a>
         <a class="item" href="{{url('retribusi/data')}}">Input Data Retribusi</a>
-        <a class="item"href="{{url('retribusi/banding')}}">Bandingkan Data</a>
+        <a class="item" href="{{url('retribusi/banding')}}">Bandingkan Data</a>
       </div>
     </div>
-    <a class="item">Rekomendasi Survey</a>
-    <a class="item">Pelanggan Baru</a>
-    <div class="right menu">
+    <a class="item" href="{{url('rekomendasi/')}}">Rekomendasi Survey</a>
+    <!-- <a class="item">Pelanggan Baru</a> -->
+   <!--  <div class="right menu">
       <a class="item">Logout</a>
-    </div>
+    </div> -->
   </div>
 </div>
