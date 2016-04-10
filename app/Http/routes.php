@@ -22,6 +22,8 @@ Route::get('retribusi/banding','DataRetribusiController@banding');
 
 Route::get('rekomendasi/','ReportBedaController@index');
 
+Route::get('survey/','SurveyBaru@index');
+
 /*grader*/
 Route::get('grader/start','DataRetribusiController@start');
 Route::get('grader/stop','DataRetribusiController@stop');
