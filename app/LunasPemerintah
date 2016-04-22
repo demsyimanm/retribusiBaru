@@ -5,30 +5,34 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Retribusi extends Model
+class LunasPemerintah extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'retribusi';
+    protected $table = 'lunaspemerintah';
     protected $primaryKey = 'id';
     public $timestamps = true;
     public $incrementing = true;
 
     protected $fillable = array(
-        'pelangan_id',
-        'bln_retribusi',
-        'thn_retribusi',
+        'pelanggan_id',
+        'nama',
+        'jalan',
+        'gang',
+        'nomor',
+        'notamb',
+        'da',
         'kd_tarif',
         'retribusi',
+        'listrik',
+        'lbr_jalan',
+        'periode_tagih',
+        'ketstatus',
         'tgl_lunas',
-        'status_cek',
+        'bulan',
+        'tahun',
     );
 
     protected $SoftDelete = true;
     protected $dates = ['deleted_at'];
-
-    public function pelanggan()
-    {
-        return $this->belongsTo('App\Pelanggan');
-    }
 }

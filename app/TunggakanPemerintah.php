@@ -5,15 +5,17 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pelanggan extends Model
+class TunggakanPemerintah extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'pelanggan';
+    protected $table = 'tunggakanpemerintah';
     protected $primaryKey = 'id';
     public $timestamps = true;
+    public $incrementing = true;
 
     protected $fillable = array(
+        'pelanggan_id',
         'nama',
         'jalan',
         'gang',
@@ -21,29 +23,16 @@ class Pelanggan extends Model
         'notamb',
         'da',
         'kd_tarif',
-        'rp_retribusi',
         'retribusi',
         'listrik',
         'lbr_jalan',
-        'kategori',
-        'status_aktif'
+        'periode_tagih',
+        'ketstatus',
+        'tgl_lunas',
+        'bulan',
+        'tahun',
     );
 
     protected $SoftDelete = true;
     protected $dates = ['deleted_at'];
-
-    public function difference()
-    {
-        return $this->hasMany('App\Difference');
-    }
-
-    public function retribusi()
-    {
-        return $this->hasMany('App\Retribusi');
-    }
-
-    public function tunggakan()
-    {
-        return $this->hasMany('App\Tunggakan');
-    }
 }
