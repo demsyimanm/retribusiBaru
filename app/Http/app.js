@@ -7,12 +7,12 @@ var util = require('util'),
     child;
 var arrChild=[];
 
-app.get('/start', function (req, res) {
+app.get('/startPemerintah', function (req, res) {
   
   //res.json({status:200,message:"Pengiriman pesan sedang di proses"});
-  var command ='C://xampp/htdocs/retribusiBaru/app/Http/retribusi.py' ;
+  var command ='C://xampp/htdocs/retribusiBaru/app/Http/retribusiPemerintah.py' ;
   var child =require('child_process').spawn('python',[command]);
-  console.log("masuk gan");
+  console.log("masuk pemerintah gan");
   /*child = exec(command, 
 	function (error, stdout, stderr) {      
 	    console.log('stdout: ' + stdout);
@@ -31,7 +31,31 @@ res.end();
 
 });
 
-app.get('/stop', function (req, res) {
+app.get('/startSwasta', function (req, res) {
+  
+  //res.json({status:200,message:"Pengiriman pesan sedang di proses"});
+  var command ='C://xampp/htdocs/retribusiBaru/app/Http/retribusiSwasta.py' ;
+  var child =require('child_process').spawn('python',[command]);
+  console.log("masuk swasta gan");
+  /*child = exec(command, 
+  function (error, stdout, stderr) {      
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+  });*/
+var objChild={};
+objChild.child=child;
+objChild.id=2;
+arrChild.push(objChild); 
+res.statusCode = 302; 
+res.setHeader("Location", "http://localhost/retribusiBaru/public/retribusi/banding");
+res.end();
+
+});
+
+app.get('/stopPemerintah', function (req, res) {
   
   //res.json({status:200,message:"Pengiriman pesan sedang di proses"});
   for(i=0;i<arrChild.length;i++)
@@ -39,6 +63,21 @@ app.get('/stop', function (req, res) {
 	  if(arrChild[i].id==1){
 		  arrChild[i].child.kill('SIGINT');
 	  }
+  }
+
+res.statusCode = 302; 
+res.setHeader("Location", "http://localhost/retribusiBaru/public/retribusi/banding");
+res.end();
+});
+
+app.get('/stopSwasta', function (req, res) {
+  
+  //res.json({status:200,message:"Pengiriman pesan sedang di proses"});
+  for(i=0;i<arrChild.length;i++)
+  {
+    if(arrChild[i].id==2){
+      arrChild[i].child.kill('SIGINT');
+    }
   }
 
 res.statusCode = 302; 

@@ -142,7 +142,8 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('grader', function (Blueprint $table) {
-            $table->integer('status');
+            $table->integer('statusPemerintah');
+            $table->integer('statusSwasta');
         });
     }
 

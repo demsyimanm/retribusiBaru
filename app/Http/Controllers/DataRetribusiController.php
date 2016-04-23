@@ -5,7 +5,8 @@ use Request;
 use Input;
 use File;
 use App\Grader;
-use App\Retribusi;
+use App\RetribusiPemerintah;
+use App\RetribusiSwasta;
 use DB;
 class DataRetribusiController extends Controller
 {
@@ -314,23 +315,38 @@ class DataRetribusiController extends Controller
     }
 
     public function banding(){
-    	$grader = Grader::first();
-    	$sumof0 = Retribusi::where('status_cek','=',0)->count();
-    	return view('dkp.bandingkan',compact('grader','sumof0'));
+    	$grader 			= Grader::first();
+    	$sumof0Pemerintah 	= RetribusiPemerintah::where('status_cek','=',0)->count();
+    	$sumof0Swasta	 	= RetribusiSwasta::where('status_cek','=',0)->count();
+    	return view('dkp.bandingkan',compact('grader','sumof0Pemerintah','sumof0Swasta'));
     }
 
-    public function start(){
-    	Grader::where('status',0)->update(array(
-			'status' => '1'
+    public function startPemerintah(){
+    	Grader::where('statusPemerintah',0)->update(array(
+			'statusPemerintah' => '1'
 		));
-    	return redirect("http://localhost:3000/start");
+    	return redirect("http://localhost:3000/startPemerintah");
     }
 
-    public function stop(){
-    	Grader::where('status',1)->update(array(
-			'status' => '0'
+    public function stopPemerintah(){
+    	Grader::where('statusPemerintah',1)->update(array(
+			'statusPemerintah' => '0'
 		));
-    	return redirect("http://localhost:3000/stop");
+    	return redirect("http://localhost:3000/stopPemerintah");
+    }
+
+    public function startSwasta(){
+    	Grader::where('statusSwasta',0)->update(array(
+			'statusSwasta' => '1'
+		));
+    	return redirect("http://localhost:3000/startSwasta");
+    }
+
+    public function stopSwasta(){
+    	Grader::where('statusSwasta',1)->update(array(
+			'statusSwasta' => '0'
+		));
+    	return redirect("http://localhost:3000/stopSwasta");
     }
 
 }

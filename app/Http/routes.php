@@ -25,5 +25,7 @@ Route::get('rekomendasi/','ReportBedaController@index');
 Route::get('survey/','SurveyBaru@index');
 
 /*grader*/
-Route::get('grader/start','DataRetribusiController@start');
-Route::get('grader/stop','DataRetribusiController@stop');
+Route::get('grader/start/pemerintah','DataRetribusiController@startPemerintah');
+Route::get('grader/stop/pemerintah','DataRetribusiController@stopPemerintah');
+Route::get('grader/start/swasta','DataRetribusiController@startSwasta');
+Route::get('grader/stop/swasta','DataRetribusiController@stopSwasta');

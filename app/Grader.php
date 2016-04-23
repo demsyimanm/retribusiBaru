@@ -9,7 +9,8 @@ class Grader extends Model
     protected $table = 'grader';
 
     protected $fillable = array(
-        'status'
+        'statusPemerintah',
+        'statusSwasta'
     );
 
 }
