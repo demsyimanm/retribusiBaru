@@ -41,6 +41,18 @@
         <a class="item" href="{{url('retribusi/banding')}}">Bandingkan Data</a>
       </div>
     </div>
+    <div class="ui dropdown item">Data Nunggak<i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item" href="{{url('list/nunggak/pemerintah')}}">Pemerintah</a>
+        <a class="item" href="{{url('list/nunggak/swasta')}}">Swasta</a>
+      </div>
+    </div>
+    <div class="ui dropdown item">Data Lunas<i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item" href="{{url('list/lunas/pemerintah')}}">Pemerintah</a>
+        <a class="item" href="{{url('list/lunas/swasta')}}">Swasta</a>
+      </div>
+    </div>
     <a class="item" href="{{url('rekomendasi/')}}">Rekomendasi Survey</a>
     <a class="item" href="{{url('survey/')}}">Survey Baru</a>
     <!-- <a class="item">Pelanggan Baru</a> -->

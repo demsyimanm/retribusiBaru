@@ -29,3 +29,14 @@ Route::get('grader/start/pemerintah','DataRetribusiController@startPemerintah');
 Route::get('grader/stop/pemerintah','DataRetribusiController@stopPemerintah');
 Route::get('grader/start/swasta','DataRetribusiController@startSwasta');
 Route::get('grader/stop/swasta','DataRetribusiController@stopSwasta');
+
+/*Nunggak dan lunas*/
+Route::get('list/nunggak/pemerintah','DataRetribusiController@nunggakPemerintah');
+Route::post('list/nunggak/pemerintah','DataRetribusiController@nunggakPemerintah');
+Route::get('list/lunas/pemerintah','DataRetribusiController@lunasPemerintah');
+Route::post('list/lunas/pemerintah','DataRetribusiController@lunasPemerintah');
+Route::get('list/nunggak/swasta','DataRetribusiController@nunggakSwasta');
+Route::post('list/nunggak/swasta','DataRetribusiController@nunggakSwasta');
+Route::get('list/lunas/swasta','DataRetribusiController@lunasSwasta');
+Route::post('list/lunas/swasta','DataRetribusiController@lunasSwasta');
+

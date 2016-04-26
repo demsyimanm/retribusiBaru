@@ -8,6 +8,12 @@ use App\Grader;
 use App\RetribusiPemerintah;
 use App\RetribusiSwasta;
 use DB;
+use App\LunasSwasta;
+use App\LunasPemerintah;
+use App\TunggakanSwasta;
+use App\TunggakanPemerintah;
+use Hash;
+
 class DataRetribusiController extends Controller
 {
     public function index(){
@@ -347,6 +353,83 @@ class DataRetribusiController extends Controller
 			'statusSwasta' => '0'
 		));
     	return redirect("http://localhost:3000/stopSwasta");
+    }
+
+    public function nunggakPemerintah(){
+    	if (Request::isMethod('get'))
+    	{
+    		$tahun = TunggakanPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = TunggakanPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		return view("dkp.nunggakPemerintah", compact('tahun','bulan'));	
+    	}
+    	else
+    	{
+    		$data = Input::all();
+    		$curTahun = $data['tahun'];
+    		$curBulan = $data['bulan'];
+    		$tahun = TunggakanPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = TunggakanPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		$list = TunggakanPemerintah::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
+    		return view("dkp.nunggakPemerintah", compact('tahun','bulan','list','curTahun','curBulan'));	
+    	}
+    	
+    }
+
+    public function nunggakSwasta(){
+    	if (Request::isMethod('get'))
+    	{
+    		$tahun = TunggakanSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = TunggakanSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		return view("dkp.nunggakSwasta", compact('tahun','bulan'));	
+    	}
+    	else
+    	{
+    		$data = Input::all();
+    		$curTahun = $data['tahun'];
+    		$curBulan = $data['bulan'];
+    		$tahun = TunggakanSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = TunggakanSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		$list = TunggakanSwasta::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
+    		return view("dkp.nunggakSwasta", compact('tahun','bulan','list','curTahun','curBulan'));	
+    	}
+    }
+
+    public function lunasPemerintah(){
+    	if (Request::isMethod('get'))
+    	{
+    		$tahun = LunasPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = LunasPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		return view("dkp.lunasPemerintah", compact('tahun','bulan'));	
+    	}
+    	else
+    	{
+    		$data = Input::all();
+    		$curTahun = $data['tahun'];
+    		$curBulan = $data['bulan'];
+    		$tahun = LunasPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = LunasPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		$list = LunasPemerintah::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
+    		return view("dkp.lunasPemerintah", compact('tahun','bulan','list','curTahun','curBulan'));	
+    	}
+    }
+
+    public function lunasSwasta(){
+    	if (Request::isMethod('get'))
+    	{
+    		$tahun = LunasSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = LunasSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		return view("dkp.lunasSwasta", compact('tahun','bulan'));	
+    	}
+    	else
+    	{
+    		$data = Input::all();
+    		$curTahun = $data['tahun'];
+    		$curBulan = $data['bulan'];
+    		$tahun = LunasSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+    		$bulan = LunasSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+    		$list = LunasSwasta::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
+    		return view("dkp.lunasSwasta", compact('tahun','bulan','list','curTahun','curBulan'));	
+    	}
     }
 
 }

@@ -64,8 +64,7 @@ def check(bot, top, index):
                             if (update_status_exec):
                                 print 'updated '+str(id_retribusi)+''' index = '''+str(index)
                             else:
-                                print 'gagal update status'
-                            
+                                print 'gagal update status'  
                         elif (not insert_exec and delete_exec):
                             print 'gagal insert'
                         elif (insert_exec and not delete_exec):
@@ -81,7 +80,7 @@ def check(bot, top, index):
             print 'masuk except'
             bot+=1
             db_retribusi.commit()
-            # sys.exit(0)
+            sys.exit(0)
 
 
 try:
@@ -103,7 +102,7 @@ try:
     index                 = 1
     while (a<sqlSumData[0]):
         b = b + divSum
-        print index
+        # print index
         if (b > sqlSumData[0]):
             b = sqlSumData[0] + 10
         # print 'a = '+str(a)+' b = '+ str(b)
