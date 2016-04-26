@@ -155,6 +155,10 @@ class CreateUsersTable extends Migration
             $table->string('tahun');
             $table->timestamps();
         });
+
+        Schema::create('status', function (Blueprint $table) {
+            $table->string('status');
+        });
     }
 
     /**
@@ -172,5 +176,6 @@ class CreateUsersTable extends Migration
         Schema::drop('lunasSwasta');
         Schema::drop('grader');
         Schema::drop('historyUpload');
+        Schema::drop('status'); 
     }
 }
