@@ -20,9 +20,9 @@ class DataRetribusiController extends Controller
 
     }
 
-    public function potensi(){
+    public function tunggakanPemerintah(){
 
-    	return view('dkp.potensi');
+    	return view('dkp.tunggakanPemerintah');
     }
 
     public function insertPasangBaru(){
@@ -33,26 +33,26 @@ class DataRetribusiController extends Controller
     	return view('dkp.pasangbaru');	
     }
 
-    public function insertPotensi(){
+    public function insertTunggakanPemerintah(){
     	ini_set("upload_max_filesize","300M");
     	ini_set("post_max_size","300M");
     	set_time_limit(108000);
 		
     	$input = Input::all();
 
-		if ($_FILES["non_rumah_tangga"]["error"] > 0){
-		  echo "Error: " . $_FILES["non_rumah_tangga"]["error"] . "<br />";
+		if ($_FILES["pemerintah"]["error"] > 0){
+		  echo "Error: " . $_FILES["pemerintah"]["error"] . "<br />";
 		}
-		if ($_FILES["rumah_tangga"]["error"] > 0){
-		  echo "Error: " . $_FILES["rumah_tangga"]["error"] . "<br />";
+		if ($_FILES["pemerintah"]["error"] > 0){
+		  echo "Error: " . $_FILES["pemerintah"]["error"] . "<br />";
 		}
 		else{
 
-			$file_non_rumah_tangga = array_get($input,'non_rumah_tangga');
-            $fileName_non_rumah_tangga = $file_non_rumah_tangga->getClientOriginalName();
-            $upload_success = $file_non_rumah_tangga->move("upload", $fileName_non_rumah_tangga);
+			$file_pemerintah = array_get($input,'pemerintah');
+            $fileName_pemerintah = $file_pemerintah->getClientOriginalName();
+            $upload_success = $file_pemerintah->move("upload", $fileName_pemerintah);
 
-            $file = fopen(public_path("upload\\".$fileName_non_rumah_tangga), "r");
+            $file = fopen(public_path("upload\\".$fileName_pemerintah), "r");
             $k = 0;
 			$header = array();
 			while(! feof($file)){
@@ -61,17 +61,17 @@ class DataRetribusiController extends Controller
 					if ($k==0){
 						for($j=0;$j<sizeof($tmp);$j++){
 							if($j==0)
-								array_push($header, "id");
+								array_push($header, "PELANGGAN_ID");
 							else
 								array_push($header, $tmp[$j]);
 						}
-						array_push($header, "KATEGORI");
-						array_push($header, "STATUS_AKTIF");
+						array_push($header, "BULAN");
+						array_push($header, "TAHUN");
 					}
 					else{
 						$data = $tmp;
-						array_push($data, "non_rumah_tangga");
-						array_push($data, "1");
+						array_push($data, $_POST['bulan']);
+						array_push($data, $_POST['tahun']);
 
 						$header_string ="";
 						for($i=0;$i<sizeof($header);$i++){
@@ -87,21 +87,14 @@ class DataRetribusiController extends Controller
 						for($i=0;$i<sizeof($data);$i++){
 							$data[$i] = str_replace('"','\"',$data[$i]);
 							$data[$i] = str_replace("'","\'",$data[$i]);
+							$data[$i] = trim($data[$i]);
 							if ($i!=0){
 								$data_string.=", ";
 							}
 							$data_string.= '"'.($data[$i]).'"';
 						}
 
-						$update_string = "";
-						for($i=1;$i<sizeof($data);$i++){
-							if ($i!=1){
-								$update_string.=", ";
-							}
-							$update_string.= $header[$i].'="'.$data[$i].'"';
-						}
-
-						$SQL = "INSERT INTO pelanggan (".$header_string.") VALUES (".$data_string.") ON DUPLICATE KEY UPDATE ". $update_string;
+						$SQL = "INSERT INTO tunggakanpemerintah (".$header_string.") VALUES (".$data_string.")";
 						DB::unprepared($SQL);
 						// print_r($SQL);
 						// echo "<br>";
@@ -109,69 +102,8 @@ class DataRetribusiController extends Controller
 				}
 				$k++;
 			}
-
-			$file_rumah_tangga = array_get($input,'rumah_tangga');
-            $fileName_rumah_tangga = $file_rumah_tangga->getClientOriginalName();
-            $upload_success = $file_rumah_tangga->move("upload", $fileName_rumah_tangga);
-
-            $file = fopen(public_path("upload\\".$fileName_rumah_tangga), "r");
-            $k = 0;
-			$header = array();
-			while(! feof($file)){
-				$tmp = fgetcsv($file,0,"~");
-				if($tmp != null){
-					if ($k==0){
-						for($j=0;$j<sizeof($tmp);$j++){
-							if($j==0)
-								array_push($header, "id");
-							else
-								array_push($header, $tmp[$j]);
-						}
-						array_push($header, "KATEGORI");
-						array_push($header, "STATUS_AKTIF");
-					}
-					else{
-						$data = $tmp;
-						array_push($data, "non_rumah_tangga");
-						array_push($data, "1");
-
-						$header_string ="";
-						for($i=0;$i<sizeof($header);$i++){
-							$header[$i] = str_replace('"','\"',$header[$i]);
-							$header[$i] = str_replace("'","\'",$header[$i]);
-							if ($i!=0){
-								$header_string.=", ";
-							}
-							$header_string.= ($header[$i]);
-						}
-
-						$data_string ="";
-						for($i=0;$i<sizeof($data);$i++){
-							$data[$i] = str_replace('"','\"',$data[$i]);
-							$data[$i] = str_replace("'","\'",$data[$i]);
-							if ($i!=0){
-								$data_string.=", ";
-							}
-							$data_string.= '"'.($data[$i]).'"';
-						}
-
-						$update_string = "";
-						for($i=1;$i<sizeof($data);$i++){
-							if ($i!=1){
-								$update_string.=", ";
-							}
-							$update_string.= $header[$i].'="'.$data[$i].'"';
-						}
-
-						$SQL = "INSERT INTO pelanggan (".$header_string.") VALUES (".$data_string.") ON DUPLICATE KEY UPDATE ". $update_string;
-						DB::unprepared($SQL);
-						// print_r($SQL);
-						// echo "<br>";
-					}
-				}
-				$k++;
-			}
-			print_r($k);
+			
+			redirect('tunggakanPemerintah');
 		}
     }
 
