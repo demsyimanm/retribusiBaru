@@ -26,6 +26,14 @@ class DataRetribusiController extends Controller
     	return view('dkp.tunggakanPemerintah');
     }
 
+    public function insertPasangBaru(){
+    	
+    }
+
+    public function pasangBaru(){
+    	return view('dkp.pasangbaru');	
+    }
+
     public function insertTunggakanPemerintah(){
     	ini_set("upload_max_filesize","300M");
     	ini_set("post_max_size","300M");

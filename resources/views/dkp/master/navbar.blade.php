@@ -36,6 +36,9 @@
     <a class="item" href="{{url('')}}">Home</a>
     <div class="ui dropdown item">Input Data <i class="dropdown icon"></i>
       <div class="menu">
+        <a class="item" href="{{url('retribusi/potensi')}}">Input Data Potensi</a>
+        <a class="item" href="{{url('retribusi/data')}}">Input Data Retribusi</a>
+        <a class="item" href="{{url('retribusi/pasangbaru')}}">Input Data Pasang Baru</a>
         <a class="item" href="{{url('retribusi/tunggakanPemerintah')}}">Data Tunggakan Pemerintah</a>
         <a class="item" href="{{url('retribusi/tunggakanSwasta')}}">Data Tunggakan Swasta</a>
         <div class="ui fitted divider"> </div>
