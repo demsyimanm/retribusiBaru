@@ -145,6 +145,18 @@ class CreateUsersTable extends Migration
             $table->integer('statusPemerintah');
             $table->integer('statusSwasta');
         });
+
+        Schema::create('historyUpload', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('keterangan');
+            $table->string('tipe');
+            $table->date('tgl_unggah');
+            $table->string('bulan');
+            $table->string('tahun');
+            $table->string('status');
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -161,5 +173,6 @@ class CreateUsersTable extends Migration
         Schema::drop('tunggakanSwasta');
         Schema::drop('lunasSwasta');
         Schema::drop('grader');
+        Schema::drop('historyUpload');
     }
 }
