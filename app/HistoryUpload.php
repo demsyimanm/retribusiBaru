@@ -18,7 +18,8 @@ class HistoryUpload extends Model
         'tipe',
         'tgl_unggah',
         'bulan',
-        'tahun'
+        'tahun',
+        'status'
     );
 
     protected $SoftDelete = true;
