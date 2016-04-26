@@ -5,15 +5,9 @@
 <div class="ui raised very padded text container segment" style="margin-top:75px;">
 	<form id="form" class="ui form" action="" method="post" enctype="multipart/form-data">
 	  <div class="field">
-	    <label>Input Data Potensi Non-Rumah Tangga</label>
+	    <label>Input Data Retribusi Swasta</label>
 	    <br>
-	    <input type="file" name="non_rumah_tangga" />
-	  </div>
-	  <br>
-	  <div class="field">
-	    <label>Input Data Potensi Rumah Tangga</label>
-	    <br>
-	    <input type="file" name="rumah_tangga" />
+	    <input type="file" name="swasta" />
 	  </div>
 	  <br>
 	  {{csrf_field()}}

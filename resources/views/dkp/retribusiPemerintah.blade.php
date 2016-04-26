@@ -7,13 +7,7 @@
 	  <div class="field">
 	    <label>Input Data Retribusi Pemerintah</label>
 	    <br>
-	    <input type="file" name="non_rumah_tangga" />
-	  </div>
-	  <br>
-	  <div class="field">
-	    <label>Input Data Retribusi Swasta</label>
-	    <br>
-	    <input type="file" name="rumah_tangga" />
+	    <input type="file" name="pemerintah" />
 	  </div>
 	  <br>
 	  {{csrf_field()}}

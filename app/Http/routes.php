@@ -13,14 +13,21 @@
 
 /*admin*/ 
 Route::get('/','HomeController@index');
-Route::get('retribusi/potensi','DataRetribusiController@potensi');
-Route::post('retribusi/potensi','DataRetribusiController@insertPotensi');
 
-Route::get('retribusi/data','DataRetribusiController@retribusi');
-Route::post('retribusi/data','DataRetribusiController@insertRetribusi');
+/*input data*/
+
+Route::get('retribusi/tunggakanPemerintah','DataRetribusiController@tunggakanPemerintah');
+Route::post('retribusi/tunggakanPemerintah','DataRetribusiController@insertTunggakanPemerintah');
+Route::get('retribusi/tunggakanSwasta','DataRetribusiController@tunggakan');
+Route::post('retribusi/tunggakanSwasta','DataRetribusiController@insertTunggakan');
+
+Route::get('retribusi/dataPemerintah','DataRetribusiController@retribusi');
+Route::post('retribusi/dataPemerintah','DataRetribusiController@insertRetribusi');
+Route::get('retribusi/dataSwasta','DataRetribusiController@retribusi');
+Route::post('retribusi/dataSwasta','DataRetribusiController@insertRetribusi');
+
 Route::get('retribusi/banding','DataRetribusiController@banding');
 
-Route::get('rekomendasi/','ReportBedaController@index');
 
 Route::get('survey/','SurveyBaru@index');
 
