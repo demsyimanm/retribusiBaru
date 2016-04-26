@@ -153,12 +153,10 @@ class CreateUsersTable extends Migration
             $table->date('tgl_unggah');
             $table->string('bulan');
             $table->string('tahun');
+            $table->string('status');
             $table->timestamps();
         });
 
-        Schema::create('status', function (Blueprint $table) {
-            $table->string('status');
-        });
     }
 
     /**
@@ -176,6 +174,5 @@ class CreateUsersTable extends Migration
         Schema::drop('lunasSwasta');
         Schema::drop('grader');
         Schema::drop('historyUpload');
-        Schema::drop('status'); 
     }
 }
