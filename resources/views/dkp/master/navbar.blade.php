@@ -38,6 +38,7 @@
       <div class="menu">
         <a class="item" href="{{url('retribusi/potensi')}}">Input Data Potensi</a>
         <a class="item" href="{{url('retribusi/data')}}">Input Data Retribusi</a>
+        <a class="item" href="{{url('retribusi/pasangbaru')}}">Input Data Pasang Baru</a>
         <a class="item" href="{{url('retribusi/banding')}}">Bandingkan Data</a>
       </div>
     </div>
