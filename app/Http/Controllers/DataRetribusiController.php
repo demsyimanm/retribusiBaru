@@ -12,6 +12,7 @@ use App\LunasSwasta;
 use App\LunasPemerintah;
 use App\TunggakanSwasta;
 use App\TunggakanPemerintah;
+use App\HistoryUpload;
 use Hash;
 
 class DataRetribusiController extends Controller
@@ -94,8 +95,107 @@ class DataRetribusiController extends Controller
 				}
 				$k++;
 			}
-			
-			redirect('tunggakanPemerintah');
+
+			HistoryUpload::insertGetId(array(
+				'keterangan' =>  "tunggakan",
+				'tipe' =>  "pemerintah",
+				'bulan' =>  $_POST["bulan"],
+				'tahun' =>  $_POST["tahun"],
+				'status' => "berhasil"
+			));
+
+			$SQL = "DELETE t1 FROM tunggakanpemerintah t1, tunggakanpemerintah t2 WHERE t1.bulan = ".$_POST['bulan']." AND t1.tahun = ".$_POST['tahun']." AND t1.pelanggan_id = t2.pelanggan_id AND t1.bulan = t2.bulan AND t1.tahun = t2.tahun AND t1.id > t2.id";
+			DB::unprepared($SQL);
+			return redirect('retribusi/tunggakanPemerintah?status=success');
+		}
+    }
+
+    public function tunggakanSwasta(){
+
+    	return view('dkp.tunggakanSwasta');
+    }
+
+    public function insertTunggakanSwasta(){
+    	ini_set("upload_max_filesize","300M");
+    	ini_set("post_max_size","300M");
+    	set_time_limit(108000);
+		
+    	$input = Input::all();
+
+		if ($_FILES["swasta"]["error"] > 0){
+		  echo "Error: " . $_FILES["swasta"]["error"] . "<br />";
+		}
+		if ($_FILES["swasta"]["error"] > 0){
+		  echo "Error: " . $_FILES["swasta"]["error"] . "<br />";
+		}
+		else{
+
+			$file_swasta = array_get($input,'swasta');
+            $fileName_swasta = $file_swasta->getClientOriginalName();
+            $upload_success = $file_swasta->move("upload", $fileName_swasta);
+
+            $file = fopen(public_path("upload\\".$fileName_swasta), "r");
+            $k = 0;
+			$header = array();
+			while(! feof($file)){
+				$tmp = fgetcsv($file,0,"~");
+				if($tmp != null){
+					if ($k==0){
+						for($j=0;$j<sizeof($tmp);$j++){
+							if($j==0)
+								array_push($header, "PELANGGAN_ID");
+							else
+								array_push($header, $tmp[$j]);
+						}
+						array_push($header, "BULAN");
+						array_push($header, "TAHUN");
+					}
+					else{
+						$data = $tmp;
+						array_push($data, $_POST['bulan']);
+						array_push($data, $_POST['tahun']);
+
+						$header_string ="";
+						for($i=0;$i<sizeof($header);$i++){
+							$header[$i] = str_replace('"','\"',$header[$i]);
+							$header[$i] = str_replace("'","\'",$header[$i]);
+							if ($i!=0){
+								$header_string.=", ";
+							}
+							$header_string.= ($header[$i]);
+						}
+
+						$data_string ="";
+						for($i=0;$i<sizeof($data);$i++){
+							$data[$i] = str_replace('"','\"',$data[$i]);
+							$data[$i] = str_replace("'","\'",$data[$i]);
+							$data[$i] = trim($data[$i]);
+							if ($i!=0){
+								$data_string.=", ";
+							}
+							$data_string.= '"'.($data[$i]).'"';
+						}
+
+						$SQL = "INSERT INTO tunggakanswasta (".$header_string.") VALUES (".$data_string.")";
+						DB::unprepared($SQL);
+						// print_r($SQL);
+						// echo "<br>";
+					}
+				}
+				$k++;
+			}
+
+			HistoryUpload::insertGetId(array(
+				'keterangan' =>  "tunggakan",
+				'tipe' =>  "swasta",
+				'bulan' =>  $_POST["bulan"],
+				'tahun' =>  $_POST["tahun"],
+				'status' => "berhasil"
+			));
+
+			$SQL = "DELETE t1 FROM tunggakanswasta t1, tunggakanswasta t2 WHERE t1.bulan = ".$_POST['bulan']." AND t1.tahun = ".$_POST['tahun']." AND t1.pelanggan_id = t2.pelanggan_id AND t1.bulan = t2.bulan AND t1.tahun = t2.tahun AND t1.id > t2.id";
+			DB::unprepared($SQL);
+			return redirect('retribusi/tunggakanSwasta?status=success');
 		}
     }
 

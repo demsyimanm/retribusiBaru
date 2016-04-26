@@ -18,8 +18,8 @@ Route::get('/','HomeController@index');
 
 Route::get('retribusi/tunggakanPemerintah','DataRetribusiController@tunggakanPemerintah');
 Route::post('retribusi/tunggakanPemerintah','DataRetribusiController@insertTunggakanPemerintah');
-Route::get('retribusi/tunggakanSwasta','DataRetribusiController@tunggakan');
-Route::post('retribusi/tunggakanSwasta','DataRetribusiController@insertTunggakan');
+Route::get('retribusi/tunggakanSwasta','DataRetribusiController@tunggakanSwasta');
+Route::post('retribusi/tunggakanSwasta','DataRetribusiController@insertTunggakanSwasta');
 
 Route::get('retribusi/dataPemerintah','DataRetribusiController@retribusi');
 Route::post('retribusi/dataPemerintah','DataRetribusiController@insertRetribusi');

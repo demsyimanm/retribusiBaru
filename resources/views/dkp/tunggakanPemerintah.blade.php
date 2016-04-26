@@ -1,7 +1,12 @@
 @extends ('dkp.master.master')
 @section ('content')
 
-
+<?php if(isset($_GET['status']) && $_GET['status'] == 'success'){
+        echo '<script language="javascript">';
+            echo 'swal("Berhasil!", "Data berhasil ditambahkan!", "success");';
+            echo '</script>';
+      }
+?>
 <div class="ui container segment very padded middle aligned" style="margin-top:75px;">
 	<form id="form" class="ui form" action="" method="post" enctype="multipart/form-data">
 	  <div class="field">
