@@ -29,8 +29,8 @@ Route::post('retribusi/retribusiSwasta','DataRetribusiController@insertRetribusi
 Route::get('retribusi/banding','DataRetribusiController@banding');
 
 
-Route::get('retribusi/pasangbaru','DataRetribusiController@pasangBaru');
-Route::post('retribusi/pasangbaru','DataRetribusiController@insertPasangBaru');
+Route::get('retribusiBaru','RetribusiBaruController@pasangBaru');
+Route::post('retribusiBaru','RetribusiBaruController@insertPasangBaru');
 
 Route::get('rekomendasi/','ReportBedaController@index');
 
