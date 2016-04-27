@@ -21,10 +21,10 @@ Route::post('retribusi/tunggakanPemerintah','DataRetribusiController@insertTungg
 Route::get('retribusi/tunggakanSwasta','DataRetribusiController@tunggakanSwasta');
 Route::post('retribusi/tunggakanSwasta','DataRetribusiController@insertTunggakanSwasta');
 
-Route::get('retribusi/dataPemerintah','DataRetribusiController@retribusi');
-Route::post('retribusi/dataPemerintah','DataRetribusiController@insertRetribusi');
-Route::get('retribusi/dataSwasta','DataRetribusiController@retribusi');
-Route::post('retribusi/dataSwasta','DataRetribusiController@insertRetribusi');
+Route::get('retribusi/retribusiPemerintah','DataRetribusiController@retribusiPemerintah');
+Route::post('retribusi/retribusiPemerintah','DataRetribusiController@insertRetribusiPemerintah');
+Route::get('retribusi/retribusiSwasta','DataRetribusiController@retribusiSwasta');
+Route::post('retribusi/retribusiSwasta','DataRetribusiController@insertRetribusiSwasta');
 
 Route::get('retribusi/banding','DataRetribusiController@banding');
 
@@ -51,4 +51,12 @@ Route::get('list/nunggak/swasta','DataRetribusiController@nunggakSwasta');
 Route::post('list/nunggak/swasta','DataRetribusiController@nunggakSwasta');
 Route::get('list/lunas/swasta','DataRetribusiController@lunasSwasta');
 Route::post('list/lunas/swasta','DataRetribusiController@lunasSwasta');
+
+
+/*API*/
+Route::get('api/nunggak/pemerintah/{tahun}/{bulan}/{page}','APIController@getTunggakanPemerintah');
+Route::get('api/nunggak/swasta/{tahun}/{bulan}/{page}','APIController@getTunggakanSwasta');
+
+Route::get('api/getBulan/{jenis}/{tipe}/{tahun}','APIController@getBulan');
+Route::get('api/getPage/{jenis}/{tipe}/{tahun}/{bulan}','APIController@getPage');
 

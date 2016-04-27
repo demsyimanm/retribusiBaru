@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LunasSwasta extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'lunasswasta';
     protected $primaryKey = 'id';
@@ -33,6 +32,4 @@ class LunasSwasta extends Model
         'tahun',
     );
 
-    protected $SoftDelete = true;
-    protected $dates = ['deleted_at'];
 }

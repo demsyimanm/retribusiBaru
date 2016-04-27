@@ -22,8 +22,8 @@ class DataRetribusiController extends Controller
     }
 
     public function tunggakanPemerintah(){
-
-    	return view('dkp.tunggakanPemerintah');
+    	$data = HistoryUpload::where('tipe','pemerintah')->where('keterangan','tunggakan')->get();
+    	return view('dkp.tunggakanPemerintah', compact('data'));
     } 
 
     public function insertTunggakanPemerintah(){
@@ -111,8 +111,8 @@ class DataRetribusiController extends Controller
     }
 
     public function tunggakanSwasta(){
-
-    	return view('dkp.tunggakanSwasta');
+    	$data = HistoryUpload::where('tipe','swasta')->where('keterangan','tunggakan')->get();
+    	return view('dkp.tunggakanSwasta', compact('data'));
     }
 
     public function insertTunggakanSwasta(){
@@ -199,56 +199,53 @@ class DataRetribusiController extends Controller
 		}
     }
 
-    public function retribusi(){
-
-    	return view('dkp.retribusi');
+    public function retribusiPemerintah(){
+    	$data = HistoryUpload::where('tipe','pemerintah')->where('keterangan','retribusi')->get();
+    	return view('dkp.retribusiPemerintah', compact('data'));
     }
 
-    public function insertRetribusi(){
+    public function insertRetribusiPemerintah(){
     	ini_set("upload_max_filesize","300M");
     	ini_set("post_max_size","300M");
     	set_time_limit(108000);
 		
+    	$SQL = "TRUNCATE retribusipemerintah";
+		DB::unprepared($SQL);
+
     	$input = Input::all();
 
-		if ($_FILES["non_rumah_tangga"]["error"] > 0){
-		  echo "Error: " . $_FILES["non_rumah_tangga"]["error"] . "<br />";
+		if ($_FILES["pemerintah"]["error"] > 0){
+		  echo "Error: " . $_FILES["pemerintah"]["error"] . "<br />";
 		}
-		if ($_FILES["rumah_tangga"]["error"] > 0){
-		  echo "Error: " . $_FILES["rumah_tangga"]["error"] . "<br />";
+		if ($_FILES["pemerintah"]["error"] > 0){
+		  echo "Error: " . $_FILES["pemerintah"]["error"] . "<br />";
 		}
 		else{
 
-			$file_non_rumah_tangga = array_get($input,'non_rumah_tangga');
-            $fileName_non_rumah_tangga = $file_non_rumah_tangga->getClientOriginalName();
-            $upload_success = $file_non_rumah_tangga->move("upload", $fileName_non_rumah_tangga);
+			$file_pemerintah = array_get($input,'pemerintah');
+            $fileName_pemerintah = $file_pemerintah->getClientOriginalName();
+            $upload_success = $file_pemerintah->move("upload", $fileName_pemerintah);
 
-            $file = fopen(public_path("upload\\".$fileName_non_rumah_tangga), "r");
+            $file = fopen(public_path("upload\\".$fileName_pemerintah), "r");
             $k = 0;
 			$header = array();
 			while(! feof($file)){
 				$tmp = fgetcsv($file,0,"~");
 				if($tmp != null){
 					if ($k==0){
-						
-						array_push($header, "PELANGGAN_ID");
-						array_push($header, "KD_TARIF");
-						array_push($header, "RETRIBUSI");
-						array_push($header, "TGL_LUNAS");
-						array_push($header, "BLN_RETRIBUSI");
-						array_push($header, "THN_RETRIBUSI");
-						array_push($header, "STATUS_CEK");
-
+						for($j=0;$j<sizeof($tmp);$j++){
+							if($j==0)
+								array_push($header, "PELANGGAN_ID");
+							else
+								array_push($header, $tmp[$j]);
+						}
+						array_push($header, "BULAN");
+						array_push($header, "TAHUN");
 					}
 					else{
-						$data = array();
-						array_push($data, $tmp[0]);
-						array_push($data, $tmp[7]);
-						array_push($data, $tmp[8]);
-						array_push($data, $tmp[9]);
-						array_push($data, "OKTOBER");
-						array_push($data, "2016");
-						array_push($data, "0");
+						$data = $tmp;
+						array_push($data, $_POST['bulan']);
+						array_push($data, $_POST['tahun']);
 
 						$header_string ="";
 						for($i=0;$i<sizeof($header);$i++){
@@ -264,17 +261,17 @@ class DataRetribusiController extends Controller
 						for($i=0;$i<sizeof($data);$i++){
 							$data[$i] = str_replace('"','\"',$data[$i]);
 							$data[$i] = str_replace("'","\'",$data[$i]);
+							$data[$i] = trim($data[$i]);
 							if ($i!=0){
 								$data_string.=", ";
 							}
-							if ($i==3) {
+							if ($i==9)
 								$data_string.="STR_TO_DATE('".$data[$i]."', '%d/%m/%Y')";
-							}
-							else
+							else 
 								$data_string.= '"'.($data[$i]).'"';
 						}
 
-						$SQL = "INSERT INTO retribusi (".$header_string.") VALUES (".$data_string.")";
+						$SQL = "INSERT INTO retribusipemerintah (".$header_string.") VALUES (".$data_string.")";
 						DB::unprepared($SQL);
 						// print_r($SQL);
 						// echo "<br>";
@@ -282,75 +279,113 @@ class DataRetribusiController extends Controller
 				}
 				$k++;
 			}
-			print_r($k);
 
-			$file_rumah_tangga = array_get($input,'rumah_tangga');
-            $fileName_rumah_tangga = $file_rumah_tangga->getClientOriginalName();
-            $upload_success = $file_rumah_tangga->move("upload", $fileName_rumah_tangga);
+			HistoryUpload::insertGetId(array(
+				'keterangan' =>  "retribusi",
+				'tipe' =>  "pemerintah",
+				'bulan' =>  $_POST["bulan"],
+				'tahun' =>  $_POST["tahun"],
+				'status' => "berhasil"
+			));
 
-            $file = fopen(public_path("upload\\".$fileName_rumah_tangga), "r");
-            $k = 0;
-			$header = array();
-			while(! feof($file)){
-				$tmp = fgetcsv($file,0,"~");
-				if($tmp != null){
-					if ($k==0){
-						
-						array_push($header, "PELANGGAN_ID");
-						array_push($header, "KD_TARIF");
-						array_push($header, "RETRIBUSI");
-						array_push($header, "TGL_LUNAS");
-						array_push($header, "BLN_RETRIBUSI");
-						array_push($header, "THN_RETRIBUSI");
-						array_push($header, "STATUS_CEK");
-
-					}
-					else{
-						$data = array();
-						array_push($data, $tmp[0]);
-						array_push($data, $tmp[7]);
-						array_push($data, $tmp[8]);
-						array_push($data, $tmp[9]);
-						array_push($data, "OKTOBER");
-						array_push($data, "2016");
-						array_push($data, "0");
-
-						$header_string ="";
-						for($i=0;$i<sizeof($header);$i++){
-							$header[$i] = str_replace('"','\"',$header[$i]);
-							$header[$i] = str_replace("'","\'",$header[$i]);
-							if ($i!=0){
-								$header_string.=", ";
-							}
-							$header_string.= ($header[$i]);
-						}
-
-						$data_string ="";
-						for($i=0;$i<sizeof($data);$i++){
-							$data[$i] = str_replace('"','\"',$data[$i]);
-							$data[$i] = str_replace("'","\'",$data[$i]);
-							if ($i!=0){
-								$data_string.=", ";
-							}
-							if ($i==3) {
-								$data_string.="STR_TO_DATE('".$data[$i]."', '%d/%m/%Y')";
-							}
-							else
-								$data_string.= '"'.($data[$i]).'"';
-						}
-
-						$SQL = "INSERT INTO retribusi (".$header_string.") VALUES (".$data_string.")";
-						DB::unprepared($SQL);
-						// print_r($SQL);
-						// echo "<br>";
-					}
-				}
-				$k++;
-			}
-			print_r($k);
+			return redirect('retribusi/retribusiPemerintah?status=success');
 		}
-
     }
+
+    public function retribusiSwasta(){
+    	$data = HistoryUpload::where('tipe','swasta')->where('keterangan','retribusi')->get();
+    	return view('dkp.retribusiSwasta', compact('data'));
+    }
+
+    public function insertRetribusiSwasta(){
+    	ini_set("upload_max_filesize","300M");
+    	ini_set("post_max_size","300M");
+    	set_time_limit(108000);
+		
+    	$SQL = "TRUNCATE retribusiswasta";
+		DB::unprepared($SQL);
+
+    	$input = Input::all();
+
+		if ($_FILES["swasta"]["error"] > 0){
+		  echo "Error: " . $_FILES["swasta"]["error"] . "<br />";
+		}
+		if ($_FILES["swasta"]["error"] > 0){
+		  echo "Error: " . $_FILES["swasta"]["error"] . "<br />";
+		}
+		else{
+
+			$file_swasta = array_get($input,'swasta');
+            $fileName_swasta = $file_swasta->getClientOriginalName();
+            $upload_success = $file_swasta->move("upload", $fileName_swasta);
+
+            $file = fopen(public_path("upload\\".$fileName_swasta), "r");
+            $k = 0;
+			$header = array();
+			while(! feof($file)){
+				$tmp = fgetcsv($file,0,"~");
+				if($tmp != null){
+					if ($k==0){
+						for($j=0;$j<sizeof($tmp);$j++){
+							if($j==0)
+								array_push($header, "PELANGGAN_ID");
+							else
+								array_push($header, $tmp[$j]);
+						}
+						array_push($header, "BULAN");
+						array_push($header, "TAHUN");
+					}
+					else{
+						$data = $tmp;
+						array_push($data, $_POST['bulan']);
+						array_push($data, $_POST['tahun']);
+
+						$header_string ="";
+						for($i=0;$i<sizeof($header);$i++){
+							$header[$i] = str_replace('"','\"',$header[$i]);
+							$header[$i] = str_replace("'","\'",$header[$i]);
+							if ($i!=0){
+								$header_string.=", ";
+							}
+							$header_string.= ($header[$i]);
+						}
+
+						$data_string ="";
+						for($i=0;$i<sizeof($data);$i++){
+							$data[$i] = str_replace('"','\"',$data[$i]);
+							$data[$i] = str_replace("'","\'",$data[$i]);
+							$data[$i] = trim($data[$i]);
+							if ($i!=0){
+								$data_string.=", ";
+							}
+							if ($i==9)
+								$data_string.="STR_TO_DATE('".$data[$i]."', '%d/%m/%Y')";
+							else 
+								$data_string.= '"'.($data[$i]).'"';
+						}
+
+						$SQL = "INSERT INTO retribusiswasta (".$header_string.") VALUES (".$data_string.")";
+						DB::unprepared($SQL);
+						// print_r($SQL);
+						// echo "<br>";
+					}
+				}
+				$k++;
+			}
+
+			HistoryUpload::insertGetId(array(
+				'keterangan' =>  "retribusi",
+				'tipe' =>  "swasta",
+				'bulan' =>  $_POST["bulan"],
+				'tahun' =>  $_POST["tahun"],
+				'status' => "berhasil"
+			));
+
+			return redirect('retribusi/retribusiSwasta?status=success');
+		}
+    }
+
+
 
     public function banding(){
     	$grader 			= Grader::first();

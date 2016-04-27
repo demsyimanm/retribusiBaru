@@ -1,7 +1,6 @@
 @extends ('dkp.master.master')
 @section ('content')
 
-
 <?php if(isset($_GET['status']) && $_GET['status'] == 'success'){
         echo '<script language="javascript">';
             echo 'swal("Berhasil!", "Data berhasil ditambahkan!", "success");';
@@ -12,7 +11,7 @@
 	<h2 class="ui header">
 	    <i class="plus icon"></i>
 	    <div class="content">
-			Insert Data Tunggakan (Swasta)
+			Insert Data Retribusi (Swasta)
     	</div>
 	</h2>
 	<br>
@@ -22,7 +21,7 @@
 
 			<form id="form" class="ui form" action="" method="post" enctype="multipart/form-data">
 			  <div class="field">
-			  	<label>Periode Tunggakan</label>
+			  	<label>Periode Retribusi</label>
 			  	<br>
 			  	<div class="ui stackable grid">
 			  		<div class="five wide column">
@@ -59,7 +58,7 @@
 			  	</div>
 			  	
 			    <br>
-			    <label>File Tunggakan Swasta</label>
+			    <label>File Retribusi Swasta</label>
 			    <br>
 			    <input id="fileInput" type="file" name="swasta" />
 			  </div>
@@ -69,7 +68,7 @@
 			</form>
 		</div>
 		<div class="eight wide column" style="margin-top:-7%;">
-			<label>History Upload Data Tunggakan Swasta :</label>
+			<label>History Upload Data Retribusi Swasta :</label>
 			<table class="ui celled table segment table-hover" id="data">
 	        <thead>
 	          	<tr>
@@ -109,7 +108,8 @@
 	        			@endforeach
 	        		<?php }?>
 	        </tbody>
-		</div>
+	    	</table>
+	    </div>
 	</div>
 </div>
 
@@ -124,7 +124,6 @@
 
 		$( "#form" ).submit();
 	});
-
 
 	$(function () {
 		$('#data').DataTable();

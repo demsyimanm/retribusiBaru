@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HistoryUpload extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'historyupload';
     protected $primaryKey = 'id';
@@ -22,7 +20,4 @@ class HistoryUpload extends Model
         'tahun',
         'status'
     );
-
-    protected $SoftDelete = true;
-    protected $dates = ['deleted_at'];
 }
