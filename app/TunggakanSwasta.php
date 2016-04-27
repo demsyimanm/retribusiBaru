@@ -3,11 +3,9 @@
 namespace App;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TunggakanSwasta extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'tunggakanswasta';
     protected $primaryKey = 'id';
@@ -32,7 +30,4 @@ class TunggakanSwasta extends Model
         'bulan',
         'tahun',
     );
-
-    protected $SoftDelete = true;
-    protected $dates = ['deleted_at'];
 }

@@ -47,9 +47,9 @@
 	  	</div>
 	  	
 	    <br>
-	    <label>Input Data Retribusi Pemerintah</label>
+	    <label>Input Data Retribusi Swasta</label>
 	    <br>
-	    <input id="fileInput" type="file" name="pemerintah" />
+	    <input id="fileInput" type="file" name="swasta" />
 	  </div>
 	  <br>
 	  {{csrf_field()}}

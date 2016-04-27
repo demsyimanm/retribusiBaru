@@ -3,12 +3,9 @@
 namespace App;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LunasPemerintah extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'lunaspemerintah';
     protected $primaryKey = 'id';
     public $timestamps = true;
@@ -33,6 +30,4 @@ class LunasPemerintah extends Model
         'tahun',
     );
 
-    protected $SoftDelete = true;
-    protected $dates = ['deleted_at'];
 }
