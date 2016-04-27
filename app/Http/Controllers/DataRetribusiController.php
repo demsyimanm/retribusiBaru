@@ -22,8 +22,8 @@ class DataRetribusiController extends Controller
     }
 
     public function tunggakanPemerintah(){
-
-    	return view('dkp.tunggakanPemerintah');
+    	$data = HistoryUpload::where('tipe','pemerintah')->where('keterangan','tunggakan')->get();
+    	return view('dkp.tunggakanPemerintah', compact('data'));
     } 
 
     public function insertTunggakanPemerintah(){
@@ -111,8 +111,8 @@ class DataRetribusiController extends Controller
     }
 
     public function tunggakanSwasta(){
-
-    	return view('dkp.tunggakanSwasta');
+    	$data = HistoryUpload::where('tipe','swasta')->where('keterangan','tunggakan')->get();
+    	return view('dkp.tunggakanSwasta', compact('data'));
     }
 
     public function insertTunggakanSwasta(){
@@ -200,8 +200,8 @@ class DataRetribusiController extends Controller
     }
 
     public function retribusiPemerintah(){
-
-    	return view('dkp.retribusiPemerintah');
+    	$data = HistoryUpload::where('tipe','pemerintah')->where('keterangan','retribusi')->get();
+    	return view('dkp.retribusiPemerintah', compact('data'));
     }
 
     public function insertRetribusiPemerintah(){
@@ -293,8 +293,8 @@ class DataRetribusiController extends Controller
     }
 
     public function retribusiSwasta(){
-
-    	return view('dkp.retribusiSwasta');
+    	$data = HistoryUpload::where('tipe','swasta')->where('keterangan','retribusi')->get();
+    	return view('dkp.retribusiSwasta', compact('data'));
     }
 
     public function insertRetribusiSwasta(){

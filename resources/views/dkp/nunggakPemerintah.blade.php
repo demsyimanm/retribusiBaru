@@ -26,7 +26,7 @@
     		<div class="four wide column">
 		      <label>Bulan</label>
 		      <select class="ui fluid dropdown" name="bulan" id="bulan">
-		      	@foreach ($bulan as $bln)
+		      	<!-- @foreach ($bulan as $bln)
 		      		<?php
 		      			$temp;
 			      		if ($bln->bulan == 1) $temp = 'Januari';
@@ -43,18 +43,18 @@
 			      		else if ($bln->bulan == 12) $temp = 'Desember';
 		      		?>
 			        <option value="{{$bln->bulan}}">{{$temp}}</option>
-			    @endforeach
+			    @endforeach -->
 		      </select>
     		</div>
     		<div class="three wide column">
     			<label>Halaman</label>
 			      <select class="ui fluid dropdown" name="page" id="page">
 			       <!--  @foreach ($tahun as $thn) -->
-				        <option value="1">1</option>
+				       <!--  <option value="1">1</option>
 				        <option value="2">2</option>
 				        <option value="3">3</option>
 				        <option value="4">4</option>
-				        <option value="5">5</option>
+				        <option value="5">5</option> -->
 				    <!-- @endforeach -->
 		      </select>
     		</div>	
@@ -82,8 +82,8 @@
 	        <thead>
 	          	<tr>
 	            	<th width="3%">No.</th>
-	            	<th width="10%">ID</th>
-	            	<th width="20%">Nama</th>
+	            	<th width="5%">ID</th>
+	            	<th width="25%">Nama</th>
 	            	<th width="37%">Alamat</th>
 	            	<th width="10%">Retribusi</th>
 	            	<th width="10%">Listrik</th>
@@ -101,7 +101,7 @@
 </div>
 <script> 
    	$(function () {
-
+   		getBulan();
         $("#result").empty();
 		var bulan = $("#bulan").val();
 		var tahun = $("#tahun").val();
@@ -110,7 +110,6 @@
 		string_url += "/"+tahun+"/"+bulan+"/"+page;
 
 		$('#nunggak').DataTable( {
-		    "paging":   false,
         	"info":     false,
 		    ajax: {
 		        url: string_url,
@@ -137,6 +136,65 @@
 		string_url += "/"+tahun+"/"+bulan+"/"+page;
 		table.ajax.url(string_url).load();
 	});
+
+	$("#tahun").change(function(){
+		getBulan();
+	});
+
+	$("#bulan").change(function(){
+		getPage();
+	});
+
+	function getBulan(){
+		$("#bulan").empty();
+		var tahun = $("#tahun").val();
+		var string_url = "{{url('/api/getBulan/tunggakan/pemerintah')}}"
+		string_url += "/"+tahun;
+		$.ajax({
+			url: string_url,
+		  context: document.body
+		}).done(function(res) {
+			res = JSON.parse(res);
+			string_res = "";
+			for(var i = 0; i < res.length; i++){
+				var temp = "";
+				if (res[i]["bulan"] == 1) temp = 'Januari';
+	      		else if (res[i]["bulan"] == 2) temp = 'Februari';
+	      		else if (res[i]["bulan"] == 3) temp = 'Maret';
+	      		else if (res[i]["bulan"] == 4) temp = 'April';
+	      		else if (res[i]["bulan"] == 5) temp = 'Mei';
+	      		else if (res[i]["bulan"] == 6) temp = 'Juni';
+	      		else if (res[i]["bulan"] == 7) temp = 'Juli';
+	      		else if (res[i]["bulan"] == 8) temp = 'Agustus';
+	      		else if (res[i]["bulan"] == 9) temp = 'September';
+	      		else if (res[i]["bulan"] == 10) temp = 'Oktober';
+	      		else if (res[i]["bulan"] == 11) temp = 'November';
+	      		else if (res[i]["bulan"] == 12) temp = 'Desember';
+
+				string_res += "<option value="+res[i]["bulan"]+">"+temp+"</option>";
+			}
+			$("#bulan").append(string_res);
+			getPage();
+		});
+	}
+
+	function getPage(){
+		$("#page").empty();
+		var tahun = $("#tahun").val();
+		var bulan = $("#bulan").val();
+		var string_url = "{{url('/api/getPage/tunggakan/pemerintah')}}"
+		string_url += "/"+tahun+"/"+bulan;
+		$.ajax({
+			url: string_url,
+		  context: document.body
+		}).done(function(res) {
+			string_res = "";
+			for(var i = 1; i <= res; i++){
+				string_res += "<option value="+i+">"+i+"</option>";
+			}
+			$("#page").append(string_res);
+		});
+	}
 
        /* $('#timepicker1').timepicker();
         $('#timepicker2').timepicker();*/

@@ -19,8 +19,8 @@ use Hash;
 class APIController extends Controller
 {
     public function getTunggakanPemerintah($tahun, $bulan, $page=1){
-    	$offset = ($page - 1) * 100;
-    	$list = TunggakanPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(100)->get();
+    	$offset = ($page - 1) * 250;
+    	$list = TunggakanPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(250)->get();
     	for ($i=0; $i<count($list);$i++){
     		$list[$i]->no = $i+1;
     		if (trim($list[$i]->gang) != "") $list[$i]->jalan .= ", Gg ". trim($list[$i]->gang);
@@ -31,8 +31,8 @@ class APIController extends Controller
     }
 
     public function getTunggakanSwasta($tahun, $bulan, $page=1){
-    	$offset = ($page - 1) * 100;
-    	$list = TunggakanSwasta::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(100)->get();
+    	$offset = ($page - 1) * 250;
+    	$list = TunggakanSwasta::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(250)->get();
     	for ($i=0; $i<count($list);$i++){
     		$list[$i]->no = $i+1;
     		if (trim($list[$i]->gang) != "") $list[$i]->jalan .= ", Gg ". trim($list[$i]->gang);
@@ -42,7 +42,7 @@ class APIController extends Controller
 		return json_encode($list);
     }
 
-    public function getBulan($tahun, $jenis, $tipe){
+    public function getBulan($jenis, $tipe, $tahun){
     	$data = [];
     	if ($jenis == "tunggakan"){
     		if ($tipe == "pemerintah"){
@@ -54,17 +54,17 @@ class APIController extends Controller
     	}
     	else{
     		if ($tipe == "pemerintah"){
-    			$data = RetribusiPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->where('tahun',$tahun)->get();
+    			$data = LunasPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->where('tahun',$tahun)->get();
 			}
 			else if ($tipe == "swasta"){
-				$data = RetribusiSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->where('tahun',$tahun)->get();
+				$data = LunasSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->where('tahun',$tahun)->get();
 			}
     	}
     	
 		return json_encode($data);
     }
 
-    public function getPage($tahun, $jenis, $bulan, $tipe){
+    public function getPage($jenis, $tipe, $tahun, $bulan){
     	$data = [];
     	if ($jenis == "tunggakan"){
     		if ($tipe == "pemerintah"){
@@ -76,13 +76,13 @@ class APIController extends Controller
     	}
     	else{
     		if ($tipe == "pemerintah"){
-	    		$data = RetribusiPemerintah::where('bulan',$bulan)->where('tahun',$tahun)->count();
+	    		$data = LunasPemerintah::where('bulan',$bulan)->where('tahun',$tahun)->count();
 	    	}
 	    	else if ($tipe == "swasta"){
-	    		$data = RetribusiSwasta::where('bulan',$bulan)->where('tahun',$tahun)->count();;
+	    		$data = LunasSwasta::where('bulan',$bulan)->where('tahun',$tahun)->count();;
 	    	}
     	}
     	
-		return json_encode($data);
+		return json_encode(ceil($data/250));
     }
 }

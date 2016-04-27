@@ -57,6 +57,6 @@ Route::post('list/lunas/swasta','DataRetribusiController@lunasSwasta');
 Route::get('api/nunggak/pemerintah/{tahun}/{bulan}/{page}','APIController@getTunggakanPemerintah');
 Route::get('api/nunggak/swasta/{tahun}/{bulan}/{page}','APIController@getTunggakanSwasta');
 
-Route::get('api/getBulan/pemerintah/{tahun}/{jenis}/{tipe}/','APIController@getBulan');
-Route::get('api/getPage/pemerintah/{tahun}/{bulan}/{jenis}/{tipe}','APIController@getPage');
+Route::get('api/getBulan/{jenis}/{tipe}/{tahun}','APIController@getBulan');
+Route::get('api/getPage/{jenis}/{tipe}/{tahun}/{bulan}','APIController@getPage');
 
