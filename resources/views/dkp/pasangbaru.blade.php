@@ -7,7 +7,7 @@
 	  <div class="field">
 	    <label>Input Data Pasang Baru</label>
 	    <br>
-	    <input type="file" name="non_rumah_tangga" />
+	    <input type="file" name="pasang_baru" />
 	  </div>
 	  <br>
 	  {{csrf_field()}}
