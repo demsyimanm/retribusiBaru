@@ -19,8 +19,8 @@ use Hash;
 class APIController extends Controller
 {
     public function getTunggakanPemerintah($tahun, $bulan, $page=1){
-    	$offset = ($page - 1) * 250;
-    	$list = TunggakanPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(250)->get();
+    	$offset = ($page - 1) * 5000;
+    	$list = TunggakanPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
     	for ($i=0; $i<count($list);$i++){
     		$list[$i]->no = $i+1;
     		if (trim($list[$i]->gang) != "") $list[$i]->jalan .= ", Gg ". trim($list[$i]->gang);
@@ -31,8 +31,8 @@ class APIController extends Controller
     }
 
     public function getTunggakanSwasta($tahun, $bulan, $page=1){
-    	$offset = ($page - 1) * 250;
-    	$list = TunggakanSwasta::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(250)->get();
+    	$offset = ($page - 1) * 5000;
+    	$list = TunggakanSwasta::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
     	for ($i=0; $i<count($list);$i++){
     		$list[$i]->no = $i+1;
     		if (trim($list[$i]->gang) != "") $list[$i]->jalan .= ", Gg ". trim($list[$i]->gang);
@@ -40,6 +40,30 @@ class APIController extends Controller
     	}
 		//dd($list);
 		return json_encode($list);
+    }
+
+     public function getLunasPemerintah($tahun, $bulan, $page=1){
+        $offset = ($page - 1) * 5000;
+        $list = LunasPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
+        for ($i=0; $i<count($list);$i++){
+            $list[$i]->no = $i+1;
+            if (trim($list[$i]->gang) != "") $list[$i]->jalan .= ", Gg ". trim($list[$i]->gang);
+            if (trim($list[$i]->nomor) != "") $list[$i]->jalan .= ", No ". trim($list[$i]->nomor);
+        }
+        //dd($list);
+        return json_encode($list);
+    }
+
+    public function getLunasSwasta($tahun, $bulan, $page=1){
+        $offset = ($page - 1) * 5000;
+        $list = LunasSwasta::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
+        for ($i=0; $i<count($list);$i++){
+            $list[$i]->no = $i+1;
+            if (trim($list[$i]->gang) != "") $list[$i]->jalan .= ", Gg ". trim($list[$i]->gang);
+            if (trim($list[$i]->nomor) != "") $list[$i]->jalan .= ", No ". trim($list[$i]->nomor);
+        }
+        //dd($list);
+        return json_encode($list);
     }
 
     public function getBulan($jenis, $tipe, $tahun){
@@ -83,6 +107,6 @@ class APIController extends Controller
 	    	}
     	}
     	
-		return json_encode(ceil($data/250));
+		return json_encode(ceil($data/5000));
     }
 }

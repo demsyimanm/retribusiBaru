@@ -58,7 +58,6 @@
         <a class="item" href="{{url('list/lunas/swasta')}}">Swasta</a>
       </div>
     </div>
-    <a class="item" href="{{url('survey/')}}">Survey Baru</a>
     <!-- <a class="item">Pelanggan Baru</a> -->
    <!--  <div class="right menu">
       <a class="item">Logout</a>

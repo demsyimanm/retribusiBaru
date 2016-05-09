@@ -14,6 +14,7 @@ use App\TunggakanSwasta;
 use App\TunggakanPemerintah;
 use App\HistoryUpload;
 use Hash;
+use Excel;
 
 class DataRetribusiController extends Controller
 {
@@ -423,42 +424,15 @@ class DataRetribusiController extends Controller
     }
 
     public function nunggakPemerintah(){
-    	if (Request::isMethod('get'))
-    	{
-    		$tahun = TunggakanPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
-    		$bulan = TunggakanPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
-    		return view("dkp.nunggakPemerintah", compact('tahun','bulan'));	
-    	}
-    	else
-    	{
-    		$data = Input::all();
-    		$curTahun = $data['tahun'];
-    		$curBulan = $data['bulan'];
-    		$tahun = TunggakanPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
-    		$bulan = TunggakanPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
-    		$list = TunggakanPemerintah::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
-    		return view("dkp.nunggakPemerintah", compact('tahun','bulan','list','curTahun','curBulan'));	
-    	}
-    	
+		$tahun = TunggakanPemerintah::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+		$bulan = TunggakanPemerintah::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+		return view("dkp.nunggakPemerintah", compact('tahun','bulan'));	
     }
 
     public function nunggakSwasta(){
-    	if (Request::isMethod('get'))
-    	{
-    		$tahun = TunggakanSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
-    		$bulan = TunggakanSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
-    		return view("dkp.nunggakSwasta", compact('tahun','bulan'));	
-    	}
-    	else
-    	{
-    		$data = Input::all();
-    		$curTahun = $data['tahun'];
-    		$curBulan = $data['bulan'];
-    		$tahun = TunggakanSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
-    		$bulan = TunggakanSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
-    		$list = TunggakanSwasta::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
-    		return view("dkp.nunggakSwasta", compact('tahun','bulan','list','curTahun','curBulan'));	
-    	}
+		$tahun = TunggakanSwasta::select('tahun')->distinct()->orderBy('tahun','ASC')->get();
+		$bulan = TunggakanSwasta::select('bulan')->distinct()->orderBy('bulan','ASC')->get();
+		return view("dkp.nunggakSwasta", compact('tahun','bulan'));	
     }
 
     public function lunasPemerintah(){
@@ -497,6 +471,99 @@ class DataRetribusiController extends Controller
     		$list = LunasSwasta::where('tahun',$data['tahun'])->where('bulan',$data['bulan'])->get();
     		return view("dkp.lunasSwasta", compact('tahun','bulan','list','curTahun','curBulan'));	
     	}
+    }
+
+    public function exportData($jenis, $tipe, $bulan, $tahun, $page){
+    	set_time_limit(108000);
+    	ini_set("post_max_size","300M");
+    	$temp;
+  		if ($bulan == 1) $temp = 'Januari';
+  		else if ($bulan == 2) $temp = 'Februari';
+  		else if ($bulan == 3) $temp = 'Maret';
+  		else if ($bulan == 4) $temp = 'April';
+  		else if ($bulan == 5) $temp = 'Mei';
+  		else if ($bulan == 6) $temp = 'Juni';
+  		else if ($bulan == 7) $temp = 'Juli';
+  		else if ($bulan == 8) $temp = 'Agustus';
+  		else if ($bulan == 9) $temp = 'September';
+  		else if ($bulan == 10) $temp = 'Oktober';
+  		else if ($bulan == 11) $temp = 'November';
+  		else if ($bulan == 12) $temp = 'Desember';
+
+  		$list;
+  		if ($jenis == "tunggakan"){
+  			if ($tipe == "pemerintah"){
+  				$offset = ($page - 1) * 5000;
+    			$list = TunggakanPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
+  			}
+  			else{
+  				$offset = ($page - 1) * 5000;
+    			$list = TunggakanSwasta::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
+  			}
+  		}
+  		else{
+  			if ($tipe == "pemerintah"){
+  				$offset = ($page - 1) * 5000;
+    			$list = LunasPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
+  			}
+  			else{
+  				$offset = ($page - 1) * 5000;
+    			$list = LunasPemerintah::where('tahun',$tahun)->where('bulan',$bulan)->skip($offset)->take(5000)->get();
+  			}
+  		}
+
+  		// dd($list);
+
+  		$result = array();
+  		$header = array();
+  		array_push($header, "ID PELANGGAN");
+		array_push($header, "NAMA");
+		array_push($header, "JALAN");
+		array_push($header, "GANG");
+		array_push($header, "NOMOR");
+		array_push($header, "NOTAMB");
+		array_push($header, "DA");
+		array_push($header, "KODE TARIF");
+		array_push($header, "RETRIBUSI");
+		array_push($header, "LISTRIK");
+		array_push($header, "LEBAR JALAN");
+		array_push($header, "PERIODE TAGIH");
+		array_push($header, "KET STATUS");
+		if ($jenis=="lunas")
+			array_push($header, "TGL LUNAS (YYYY-MM-DD)");
+		array_push($result, $header);
+
+  		for ($i=0; $i<count($list);$i++){
+			$data = array();
+			array_push($data, $list[$i]->pelanggan_id);
+			array_push($data, $list[$i]->nama);
+			array_push($data, $list[$i]->jalan);
+			array_push($data, $list[$i]->gang);
+			array_push($data, $list[$i]->nomor);
+			array_push($data, $list[$i]->notamb);
+			array_push($data, $list[$i]->da);
+			array_push($data, $list[$i]->kd_tarif);
+			array_push($data, $list[$i]->retribusi);
+			array_push($data, $list[$i]->listrik);
+			array_push($data, $list[$i]->lbr_jalan);
+			array_push($data, $list[$i]->periode_tagih);
+			array_push($data, $list[$i]->ket_status);
+			if ($jenis=="lunas")
+				array_push($data, $list[$i]->tgl_lunas);
+			array_push($result, $data);
+		}
+
+  		// dd($result);
+
+    	Excel::create('Data rekap '.$jenis.' '.$tipe.' '.$temp.' '.$tahun.' page '. $page, function($excel) use($result) {
+
+		    $excel->sheet('Sheet 1', function($sheet) use($result) {
+
+		        $sheet->fromArray($result, null,'A1', false, false);
+
+		    });
+
+		})->download('xls');
     }
 
 }

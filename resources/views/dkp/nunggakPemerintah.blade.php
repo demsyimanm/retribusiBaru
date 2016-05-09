@@ -68,10 +68,12 @@
     		</div>
     		<div class="two wide column">
     			<div style="padding-top:20px">
+			      <!-- <a href="{{url('export/tunggakan/pemerintah/1/2016')}}"> -->
 			      <button id="exportBtn" class="ui icon teal button" style="width:125px">
 			      <i class="print icon"></i>
 			      	Export Data
 			      </button>
+			      <!-- </a> -->
 			    </div>
     		</div>
     	</div>
@@ -195,6 +197,15 @@
 			$("#page").append(string_res);
 		});
 	}
+
+	$("#exportBtn").click(function(){
+		var bulan = $("#bulan").val();
+		var tahun = $("#tahun").val();
+		var page = $("#page").val();
+		var string_url = "{{url('export/tunggakan/pemerintah/')}}"
+		string_url += "/"+bulan+"/"+tahun+"/"+page;
+		window.location.href = string_url;
+	});
 
        /* $('#timepicker1').timepicker();
         $('#timepicker2').timepicker();*/

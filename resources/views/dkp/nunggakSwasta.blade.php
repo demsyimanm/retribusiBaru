@@ -197,6 +197,15 @@
 		});
 	}
 
+	$("#exportBtn").click(function(){
+		var bulan = $("#bulan").val();
+		var tahun = $("#tahun").val();
+		var page = $("#page").val();
+		var string_url = "{{url('export/tunggakan/swasta/')}}"
+		string_url += "/"+bulan+"/"+tahun+"/"+page;
+		window.location.href = string_url;
+	});
+
        /* $('#timepicker1').timepicker();
         $('#timepicker2').timepicker();*/
     </script>
