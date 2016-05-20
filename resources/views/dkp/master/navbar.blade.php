@@ -34,7 +34,6 @@
  <div class="ui container">
     <div class="header item"><img class ="logo" src="{{URL::to('assets/image/logosurabaya.png')}}" style="width:50px; padding-right:15px;"> DKP Surabaya</div>
     <a class="item" href="{{url('')}}">Home</a>
-    <a class="item" href="{{url('retribusiBaru')}}">Retribusi Baru</a>
     <div class="ui dropdown item">Input Data <i class="dropdown icon"></i>
       <div class="menu">
         <a class="item" href="{{url('retribusi/tunggakanPemerintah')}}">Data Tunggakan Pemerintah</a>
@@ -46,13 +45,13 @@
         <a class="item" href="{{url('retribusi/banding')}}">Bandingkan Data</a>
       </div>
     </div>
-    <div class="ui dropdown item">Data Nunggak<i class="dropdown icon"></i>
+    <div class="ui dropdown item">Rekap Data Tunggakan<i class="dropdown icon"></i>
       <div class="menu">
         <a class="item" href="{{url('list/nunggak/pemerintah')}}">Pemerintah</a>
         <a class="item" href="{{url('list/nunggak/swasta')}}">Swasta</a>
       </div>
     </div>
-    <div class="ui dropdown item">Data Lunas<i class="dropdown icon"></i>
+    <div class="ui dropdown item">Rekap Data Lunas<i class="dropdown icon"></i>
       <div class="menu">
         <a class="item" href="{{url('list/lunas/pemerintah')}}">Pemerintah</a>
         <a class="item" href="{{url('list/lunas/swasta')}}">Swasta</a>

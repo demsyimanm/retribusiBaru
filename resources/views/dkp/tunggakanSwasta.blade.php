@@ -114,7 +114,8 @@
 </div>
 
 <script type="text/javascript">
-	$( "#btn_submit" ).click(function() {
+
+	function sendData(){
 		swal({
 			title: "Data Sedang Diproses",   
 			text: "Mohon tidak menutup halam ini.",   
@@ -123,8 +124,20 @@
 		});
 
 		$( "#form" ).submit();
-	});
+	}
 
+	$( "#btn_submit" ).click(function() {
+		swal({   
+			title: "Apakah Anda Yakin ?",   
+			text: "Pastikan data yang diunggah sesuai dengan periodenya",   
+			type: "warning",   showCancelButton: true,   
+			confirmButtonColor: "#6BDD55",   
+			confirmButtonText: "Yes",   
+			closeOnConfirm: false }, 
+			function(){   
+				sendData();
+			});
+	});
 
 	$(function () {
 		$('#data').DataTable();

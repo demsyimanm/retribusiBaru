@@ -104,9 +104,14 @@ class DataRetribusiController extends Controller
 				'tahun' =>  $_POST["tahun"],
 				'status' => "berhasil"
 			));
+			
 
 			$SQL = "DELETE t1 FROM tunggakanpemerintah t1, tunggakanpemerintah t2 WHERE t1.bulan = ".$_POST['bulan']." AND t1.tahun = ".$_POST['tahun']." AND t1.pelanggan_id = t2.pelanggan_id AND t1.bulan = t2.bulan AND t1.tahun = t2.tahun AND t1.id > t2.id";
 			DB::unprepared($SQL);
+
+			fclose($file);
+			unlink(public_path("upload\\".$fileName_pemerintah));
+
 			return redirect('retribusi/tunggakanPemerintah?status=success');
 		}
     }
@@ -196,6 +201,10 @@ class DataRetribusiController extends Controller
 
 			$SQL = "DELETE t1 FROM tunggakanswasta t1, tunggakanswasta t2 WHERE t1.bulan = ".$_POST['bulan']." AND t1.tahun = ".$_POST['tahun']." AND t1.pelanggan_id = t2.pelanggan_id AND t1.bulan = t2.bulan AND t1.tahun = t2.tahun AND t1.id > t2.id";
 			DB::unprepared($SQL);
+
+			fclose($file);
+			unlink(public_path("upload\\".$fileName_swasta));
+
 			return redirect('retribusi/tunggakanSwasta?status=success');
 		}
     }
@@ -289,6 +298,9 @@ class DataRetribusiController extends Controller
 				'status' => "berhasil"
 			));
 
+			fclose($file);
+			unlink(public_path("upload\\".$fileName_pemerintah));
+
 			return redirect('retribusi/retribusiPemerintah?status=success');
 		}
     }
@@ -381,6 +393,9 @@ class DataRetribusiController extends Controller
 				'tahun' =>  $_POST["tahun"],
 				'status' => "berhasil"
 			));
+			
+			fclose($file);
+			unlink(public_path("upload\\".$fileName_swasta));
 
 			return redirect('retribusi/retribusiSwasta?status=success');
 		}
